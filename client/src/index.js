@@ -1,12 +1,17 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
+import Routes from './routes';
 import * as serviceWorker from './serviceWorker';
-
+import { BrowserRouter } from 'react-router-dom';
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <Provider store={createStoreWithMiddleware(Reducer,
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}>
+    <BrowserRouter>
+    <Routes />
+
+    </BrowserRouter>
+    </Provider>
   </React.StrictMode>,
   document.getElementById('root')
 );
