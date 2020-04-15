@@ -3,6 +3,11 @@ import ReactDOM from 'react-dom';
 import Routes from './routes';
 import * as serviceWorker from './serviceWorker';
 import { BrowserRouter } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { applyMiddleware, createStore } from 'redux';
+import promiseMiddleware from 'redux-promise';
+import Reducer from './reducers'
+const createStoreWithMiddleware = applyMiddleware(promiseMiddleware,ReduxThunk)(createStore);
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={createStoreWithMiddleware(Reducer,
