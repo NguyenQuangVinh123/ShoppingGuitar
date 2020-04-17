@@ -1,10 +1,23 @@
 import React from 'react';
 
-const FormField = ({formData,change,id}) => {
+const FormField = ({id,formData,change}) => {
+
+    const showError = () => {
+        let errorMessage = null;
+         if(formData.validation && !formData.valid){
+            errorMessage = (
+                <div className="error_label">
+                    {formData.validationMessage}
+                </div>
+            )
+         }
+
+         return errorMessage;
+    }
     const renderTemplate = () =>{
         let formTemplate = null;
 
-        switch (key) {
+        switch (formData.element) {
             case ('input'):
                 formTemplate = (
                     <div className="formBlock">
@@ -14,6 +27,7 @@ const FormField = ({formData,change,id}) => {
                             onBlur = {(event) => change({event,id,blur:true}) }
                             onChange = {(event) => change({event,id})}
                         />
+                        {showError()}
                     </div>
                 )
                 break;

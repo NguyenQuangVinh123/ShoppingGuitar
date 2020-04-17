@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import FormField from '../Form/FormField'
-const Login = () => {
-    state = {
+import { loginUser } from '../../actions/user_actions'
+import {update,generateData,ifFormValid} from '../Form/FormAction'
+import { withRouter } from 'react-router-dom'
+const Login = (props) => {
+    const state = {
         formError : false, 
         formSuccess: '',
         formData : {
@@ -39,22 +42,71 @@ const Login = () => {
             },
         }
     }
-    submitForm = () =>{
+    const [input,setInput] =  useState(state);
+    const updateForm = async (element) =>{
+        const newFormData = update(element,input.formData,'login');
+        const newFormData_Input = {
+            formError : false, 
+            formData : newFormData
+        }
+        await setInput(newFormData_Input)
 
     }
-    updateForm = () =>{
+    const submitForm = async (event) =>{
+        event.preventDefault();
+        
+        let dataToSubmit = generateData(input.formData,'login');
+        let formIsValid = ifFormValid(input.formData,'login');
 
-    }
+        if(formIsValid) {
+            props.dispatch(loginUser(dataToSubmit))
+                .then(res => {
+                    if(res.payload.loginSuccess){
+                       props.history.push('/user/dashboard')
+                    }else{
+                        setInput((preState) => ({
+                            ...preState,
+                            formError : true,
+                        }))
+                    }
+                })
+        }else {
+            await setInput((preState) => ({
+                ...preState,
+                formError : true,
+            }))
+           
+           
+        }
+
+
+    };
     return (
         <div className='signin_wrapper'>
-            <form onSubmit= {() => submitForm(event)}>
+            <form onSubmit= {(event) => submitForm(event)}>
+              
                 <FormField 
                     id={'email'}
-                    formData = {state.formData.email}
+                    formData = {input.formData.email}
+                    change = {(element) => updateForm(element)}
+                />
+                 <FormField 
+                    id={'password'}
+                    formData = {input.formData.password}
                     change = {(element) => updateForm(element)}
                 />
             </form>
+            {
+                input.formError ? 
+                <div className="error_label">
+                    Please check your data
+                </div>
+                : null
+            }
+            <button onClick={(event) => submitForm(event)}>
+                LOG IN
+            </button>
         </div>
     )
 }
-export default  connect()(Login)
+export default  connect()(withRouter(Login))
