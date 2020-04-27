@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import FormField from '../Form/FormField'
-import { loginUser } from '../../actions/user_actions'
+import { registerUser } from '../../actions/user_actions'
 import {update,generateData,ifFormValid} from '../Form/FormAction'
 import { withRouter } from 'react-router-dom'
 
-const Register = () => {
+const Register = (props) => {
     const state = {
         formError : false, 
         formSuccess: '',
@@ -89,6 +89,12 @@ const Register = () => {
             },
         }
     }
+    const setStateFormError = async() => {
+        await setInput((preState) => ({
+            ...preState,
+            formError : true,
+        }))
+    }
     const [input,setInput] =  useState(state);
 
     const updateForm = async (element) =>{
@@ -107,14 +113,19 @@ const Register = () => {
         let formIsValid = ifFormValid(input.formData,'register');
 
         if(formIsValid) {
-           
+           props.dispatch(registerUser(dataToSubmit))
+           .then(res =>{
+               if(res.payload.success){
+                    
+               }else{
+                setStateFormError()
+               }
+            
+           }).catch(e =>{
+
+           })
         }else {
-            await setInput((preState) => ({
-                ...preState,
-                formError : true,
-            }))
-           
-           
+            setStateFormError()
         }
 
 
