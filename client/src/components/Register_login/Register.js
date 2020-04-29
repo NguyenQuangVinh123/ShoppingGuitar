@@ -3,12 +3,12 @@ import { connect } from 'react-redux'
 import FormField from '../Form/FormField'
 import { registerUser } from '../../actions/user_actions'
 import {update,generateData,ifFormValid} from '../Form/FormAction'
-import { withRouter } from 'react-router-dom'
-
+import { withRouter } from 'react-router-dom' 
+import Dialog from '@material-ui/core/Dialog'
 const Register = (props) => {
     const state = {
         formError : false, 
-        formSuccess: '',
+        formSuccess: false,
         formData : {
             name : {
                 element : 'input',
@@ -96,7 +96,7 @@ const Register = (props) => {
         }))
     }
     const [input,setInput] =  useState(state);
-
+    
     const updateForm = async (element) =>{
         const newFormData = update(element,input.formData,'register');
         const newFormData_Input = {
@@ -179,21 +179,29 @@ const Register = (props) => {
                                     </div>
                                 </div> 
                                 <div>
-                                {
-                input.formError ? 
-                <div className="error_label">
-                    Please check your data
-                </div>
-                : null
-            }
-            <button onClick={(event) => submitForm(event)}>
-                CREATE ACCOUNT
-            </button>
+                                    {
+                                        input.formError ? 
+                                        <div className="error_label">
+                                            Please check your data
+                                        </div>
+                                        : null
+                                    }
+                                    <button onClick={(event) => submitForm(event)}>
+                                        CREATE ACCOUNT
+                                    </button>
                                 </div>
                         </form>
                     </div>
                 </div>
             </div>
+            <Dialog open={input.formSuccess}>
+                <div className='dialog_alert'>
+                    <div>Congratulations !!</div>
+                    <div>
+                        You will be redirected to the LOGIN PAGE in a second...
+                    </div>
+                </div>
+            </Dialog>
         </div>
     )
 }
