@@ -15,15 +15,15 @@ const links = [
         linkTo : "/user/cart"
     },
 ]
-const UserLayout = (props) => {
-
-    const generateLinks = (links) => (
-        links.map((item,index) => {
+const generateLinks = (links) => {
+    links.map((item,index) => (
             <Link to={item.linkTo} key={index}>
                 {item.name}
             </Link>
-        })
-    )
+    ))
+    
+}
+const UserLayout = (props) => {
     return (
         <div className="container">
             <div className="user_container">

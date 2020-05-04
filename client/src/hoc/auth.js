@@ -14,25 +14,28 @@ export default function(ComposedClass,reload,adminRoute = null){
             props.dispatch(auth())
             .then(res => {
                 let user = props.user.userData;
-                console.log(user);
-                if(!user.isAuth){
-                    if(reload){
-                        props.history.push('/register');
-                    }
-                }else{
-                    if(adminRoute && !user.isAdmin){
-                        props.history.push('/user/dashboard');
-                    }else{
-                        if(reload === false){
-                            props.history.push('/user/dashboard');
+                if(user !== undefined){
+                    if(!user.isAuth){
+                        if(reload){
+                            props.history.push('/register');
                         }
+                    }else{
+                        if(adminRoute && !user.isAdmin){
+                            props.history.push('/user/dashboard');
+                        }else{
+                            if(reload === false){
+                                props.history.push('/user/dashboard');
+                            }
+                        }
+                        
                     }
-                    
                 }
                 setState((preState) => ({
-                        ...preState,
-                        loading : false
+                    ...preState,
+                    loading : false
                 }))
+               
+               
             }) 
         },[])
         return (
