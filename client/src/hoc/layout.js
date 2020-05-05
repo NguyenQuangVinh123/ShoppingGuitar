@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Header from "../components/Header_footer/Header";
-import Footer from "../components/Header_footer/Footer";
+import Header from "../components/Header_footer/Header/Header";
+import Footer from "../components/Header_footer/Footer/Footer";
 
 class Layout extends Component {
   render() {

@@ -3,13 +3,10 @@ import { connect } from 'react-redux';
 import {auth } from '../actions/user_actions';
 import CircularProgress from '@material-ui/core/CircularProgress';
 export default function(ComposedClass,reload,adminRoute = null){
-    const [state,setState] = useState({
-        loading : true,
-    })
+    const [loading,setLoading] = useState(true)
 
    
     const Auth = (props) => {
-
         useEffect(()=>{
             props.dispatch(auth())
             .then(res => {
@@ -30,18 +27,15 @@ export default function(ComposedClass,reload,adminRoute = null){
                         
                     }
                 }
-                setState((preState) => ({
-                    ...preState,
-                    loading : false
-                }))
+                setLoading(false);
                
                
             }) 
-        },[])
+        },[]);
         return (
             <div>
                 {
-                   state.loading ?
+                   loading ?
                     <div className="main_loader">
                         <CircularProgress style={{color : "#2196F3"}} thickness = {7} />
                     </div>
