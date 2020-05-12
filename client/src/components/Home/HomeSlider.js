@@ -24,7 +24,7 @@ const HomeSlider = (props) => {
       speed : 500,
       slidesToShow : 1,
       slidesToScroll : 1,
-      arrow : false,
+      arrows : false,
   }
   const generateSlides = () => (
     slides ?
@@ -37,7 +37,16 @@ const HomeSlider = (props) => {
                     }}
                 >
                     <div className="featured_action">
-                       
+                      <div className="tag title">{item.lineOne}</div>
+                      <div className="tag low_title">{item.lineTwo}</div>
+                      <div>
+                        <MyButton 
+                          type="default"
+                          title = {item.linkTitle}
+                          linkTo = {item.linkTo}
+                          addStyles = {{margin : '10px 0 0 0'}}
+                        />
+                      </div>
                     </div>
                 </div>
             </div>
@@ -48,7 +57,7 @@ const HomeSlider = (props) => {
   return (
     <div className="featured_container">
         <Slider {...settings}>
-            {/* {generateSlides()} */}
+            {generateSlides()}
         </Slider>
     </div>
   )
