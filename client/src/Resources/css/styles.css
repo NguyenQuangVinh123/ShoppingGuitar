@@ -508,7 +508,7 @@ footer .business_nfo .nfo {
     padding: 15px 0 10px 0;
 }
 
-.card_item_wrapper .actions .button_wrapp:nth-child(1) {
+.card_item_wrapper .actions .button_wrap:nth-child(1) {
     flex-grow: 1;
     padding-right: 10px;
 }

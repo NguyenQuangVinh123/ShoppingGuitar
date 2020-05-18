@@ -1,8 +1,8 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import FormField from '../Form/FormField'
+import FormField from '../utils/Form/FormField'
 import { loginUser } from '../../actions/user_actions'
-import {update,generateData,ifFormValid} from '../Form/FormAction'
+import {update,generateData,ifFormValid} from '../utils/Form/FormAction'
 import { withRouter } from 'react-router-dom'
 const Login = (props) => {
     const state = {

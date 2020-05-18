@@ -1,16 +1,14 @@
-import React, { Component } from "react";
+import React from "react";
 import Header from "../components/Header_footer/Header/Header";
 import Footer from "../components/Header_footer/Footer/Footer";
 
-class Layout extends Component {
-  render() {
-    return (
-      <div>
-        <Header />
-        <div className="page_container">{this.props.children}</div>
-        <Footer />
-      </div>
-    );
-  }
-}
+const Layout = (props) => {
+  return (
+    <div>
+      <Header />
+      <div className="page_container">{props.children}</div>
+      <Footer />
+    </div>
+  );
+};
 export default Layout;
