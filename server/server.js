@@ -72,6 +72,42 @@ app.get('/api/product/article_by_id',(req,res) => {
         return res.status(200).send(docs)
     })
 })
+////// SHOP ////////
+app.post('/api/product/shop',(req,res) =>{
+        let order = req.body.order ? req.body.order : 'desc' ;
+        let sortBy  = req.body.sortBy ? req.body.sortBy : '_id' ;
+        let limit  = req.body.limit ? parseInt(req.body.limit) : 100 ;
+        let skip  =  parseInt(req.body.skip) ;
+        let findArgs  = {} ;
+
+        for(let key in req.body.filters){
+            if(req.body.filters[key].length >0){
+                if(key === "price"){
+                    findArgs[key] = {
+                        $gte  : req.body.filters[key][0],
+                        $lte : req.body.filters[key][1]
+                    }
+                }else{
+                    findArgs[key] = req.body.filters[key]
+                }
+            }
+        }
+        Product
+        .find(findArgs)
+        .populate('brand')
+        .populate('wood')
+        .sort([[sortBy,order]])
+        .skip(skip)
+        .limit(limit)
+        .exec((err,articles) => {
+            if(err) return res.status(400).send(err)
+            res.status(200).json({
+                size : articles.length,
+                articles : articles
+            })
+        })
+
+})
 ///// WOODS //////
 
 app.post('/api/product/wood',auth,admin,(req,res) => {
@@ -167,9 +203,6 @@ app.get('/api/users/logout',auth,(req,res)=>{
         }
     )
 })
-
-
-
 
 app.listen(port, ()=>{
     console.log(`Server Running at port ${port}`);
