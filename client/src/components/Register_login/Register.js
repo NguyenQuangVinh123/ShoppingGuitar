@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import FormField from '../utils/Form/FormField'
 import { registerUser } from '../../actions/user_actions'
 import {update,generateData,ifFormValid} from '../utils/Form/FormAction'
-import { withRouter } from 'react-router-dom' 
 import Dialog from '@material-ui/core/Dialog'
 const Register = (props) => {
     const state = {
@@ -126,7 +125,6 @@ const Register = (props) => {
         }else {
             setStateFormError()
         }
-
 
     }
     return (

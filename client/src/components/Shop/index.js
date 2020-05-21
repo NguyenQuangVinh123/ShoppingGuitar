@@ -6,6 +6,10 @@ import CollapseCheckbox from '../utils/collapseCheckbox';
 import {frets,price} from '../utils/Form/Fixed_categories';
 import CollapseRadio from '../utils/collapseRadio';
 import LoadMoreCard from './loadMoreCard';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import faTh from '@fortawesome/fontawesome-free-solid/faTh';
+import faBars from '@fortawesome/fontawesome-free-solid/faBars';
+
 const Shop = (props) => {
     const [layout,setLayout]  = useState({grid : '',limit : 6,skip : 0,filters : {
         brand : [],
@@ -75,6 +79,12 @@ const Shop = (props) => {
                }))
         })
     }
+    const handleGrid  = () => {
+        setLayout((preState) => ({
+            ...preState,
+            grid : !layout.grid ? 'grid_bars' : ''
+        }))
+    }
     return (
         <div>
             <PageTop title="Browse Products" />
@@ -94,7 +104,16 @@ const Shop = (props) => {
                     <div className="right">
                         <div className='shop_options'>
                             <div className='shop_grids clear'>
-                               grids
+                               <div className={`grid_btn ${layout.grid ? '' : 'active'}`} 
+                                onClick= {() => handleGrid()}
+                               >
+                                   <FontAwesomeIcon icon={faTh} />
+                               </div>
+                               <div className={`grid_btn ${!layout.grid ? '' : 'active'}`} 
+                                onClick= {() => handleGrid()}
+                               >
+                                   <FontAwesomeIcon icon={faBars} />
+                               </div>
                             </div>
                         </div>
                         <div>

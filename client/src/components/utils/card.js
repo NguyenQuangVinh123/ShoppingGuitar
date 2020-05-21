@@ -22,8 +22,12 @@ const Card = ({ ...props }) => {
           <div className="name">{props.name}</div>
           <div className="brand">${props.price}</div>
         </div>
-      </div>
-      {props.grid ? <div className="description">sdsadasd</div> : null}
+     
+      {props.grid ? 
+      <div className="description">
+        <p>{props.description}</p>
+      </div> 
+      : null}
       <div className='actions'>
         <div className='button_wrap'>
           <MyButton type ="default" 
@@ -39,6 +43,7 @@ const Card = ({ ...props }) => {
           }} 
           />
         </div>
+      </div>
       </div>
     </div>
   );
