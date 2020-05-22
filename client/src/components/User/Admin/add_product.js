@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import UserLayout from '../../../hoc/user';
 import FormField from '../../utils/Form/FormField'
-import {update,generateData,ifFormValid,populateOptionFileds} from '../../utils/Form/FormAction'
+import {update,generateData,ifFormValid,populateOptionFileds,resetFields} from '../../utils/Form/FormAction'
 import {connect} from 'react-redux';
-import { getBrands ,getWoods} from '../../../actions/products_actions';
+import { getBrands ,getWoods, addProduct,clearProduct} from '../../../actions/products_actions';
 
 const AddProduct = (props) => {
     const [form,setForm] = useState({
@@ -184,7 +184,11 @@ const AddProduct = (props) => {
             const newFormData = populateOptionFileds(form.formData,res.payload,'wood');
             updateFields(newFormData)
         })
-    },[])
+    },[]);
+    useEffect(() =>
+    {
+        props.dispatch.clearProduct()
+    },[form.formSuccess])
     const updateFields = (newFormData) => {
         console.log(newFormData);
         setForm((preState) => ({
@@ -206,14 +210,37 @@ const AddProduct = (props) => {
         }
         await setForm(newFormData_Input)
     }
+    const resetFiledHandler = () => {
+        const newFormData = resetFields(form.formData,'products');
+        
+        setForm((preState) => ({
+            ...preState,
+            formSuccess : true,
+            formData : newFormData
+        }))
+        setTimeout(() => {
+            setForm((preState) => ({
+                ...preState,
+                formSuccess : false,
+            }))
+           
+        },3000)
+   
+    }
     const submitForm = async (event) => {
         event.preventDefault();
         
-        let dataToSubmit = generateData(form.formData,'register');
-        let formIsValid = ifFormValid(form.formData,'register');
+        let dataToSubmit = generateData(form.formData,'products');
+        let formIsValid = ifFormValid(form.formData,'products');
 
         if(formIsValid) {
-          
+          props.dispatch(addProduct(dataToSubmit)).then((res) =>{
+              if(res.success){
+                  resetFiledHandler();
+              }else{
+                setStateFormError()
+              }
+          })
         }else {
             setStateFormError()
         }
@@ -259,13 +286,13 @@ const AddProduct = (props) => {
                             </div>
                             : null
                         }
-                          {
+                        {
                                         form .formError ? 
                                         <div className="error_label">
                                             Please check your data
                                         </div>
                                         : null
-                                    }
+                        }
                                     <button onClick={(event) => submitForm(event)}>
                                         ADD PRODUCT
                                     </button>

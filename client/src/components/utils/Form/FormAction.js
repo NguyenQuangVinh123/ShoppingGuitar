@@ -70,3 +70,13 @@ export const populateOptionFileds = (formdata,arrayData = [] , field) => {
     newFormData[field].config.options = newArray;
     return newFormData;
 }
+export const resetFields = (formdata,formName) => {
+    const newFormData = {...formdata};
+    for(let key in newFormData){
+        newFormData[key].value = '';
+        newFormData[key].valid = false;
+        newFormData[key].touched = false;
+        newFormData[key].validationMessage = '';
+    }
+    return newFormData
+}
