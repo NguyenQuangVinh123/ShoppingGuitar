@@ -4,6 +4,7 @@ import FormField from '../../utils/Form/FormField'
 import {update,generateData,ifFormValid,populateOptionFileds,resetFields} from '../../utils/Form/FormAction'
 import {connect} from 'react-redux';
 import { getBrands ,getWoods, addProduct,clearProduct} from '../../../actions/products_actions';
+import FileUpload from '../../utils/Form/FileUpload';
 
 const AddProduct = (props) => {
     const [form,setForm] = useState({
@@ -172,6 +173,16 @@ const AddProduct = (props) => {
                 validationMessage : '',
                 showlabel : true
             },
+            images : {
+                value: [],
+                validation : {
+                    required : false
+                },
+                valid : true,
+                touched : false,
+                validationMessage : '',
+                showlabel : false
+            }
         }
     })
     
@@ -187,10 +198,9 @@ const AddProduct = (props) => {
     },[]);
     useEffect(() =>
     {
-        props.dispatch.clearProduct()
+        props.dispatch(clearProduct())
     },[form.formSuccess])
     const updateFields = (newFormData) => {
-        console.log(newFormData);
         setForm((preState) => ({
             ...preState,
             formData : newFormData
@@ -235,7 +245,8 @@ const AddProduct = (props) => {
 
         if(formIsValid) {
           props.dispatch(addProduct(dataToSubmit)).then((res) =>{
-              if(res.success){
+              console.log(props.products)
+              if(res.payload.success){
                   resetFiledHandler();
               }else{
                 setStateFormError()
@@ -245,11 +256,18 @@ const AddProduct = (props) => {
             setStateFormError()
         }
     }
+    const imagesHandler = () => {
+
+    }
     return (
         <UserLayout>
             <div>
                    <h1>Add Product</h1>
                    <form onSubmit={(event) => submitForm(event)}>
+                       <FileUpload 
+                        imagesHandler = {(images) => imagesHandler(images) }
+                        reset = {form.formSuccess}
+                       />
                         <FormField id={'name'} formData={form.formData.name}
                             change = {(element) => updateForm(element)}
                         />

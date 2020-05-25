@@ -1,6 +1,8 @@
 const express = require('express')
 const bodyParser = require('body-parser');
 const cookiesParser = require('cookie-parser');
+const formidable = require('express-formidable');
+const cloudinary = require('cloudinary');
 const app = express();
 const port  = process.env.PORT || 3003;
 require('dotenv').config();
@@ -11,6 +13,11 @@ mongoose.connect(process.env.DATABASE,{ useNewUrlParser: true ,useUnifiedTopolog
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cookiesParser());
+cloudinary.config({
+    cloud_name : process.env.CLOUDNAME,
+    api_key : process.env.APIKEY,
+    api_secret :process.env.APISECRET
+})
 ///// Middelwares //////
 const { auth } = require('./middleware/auth');
 const { admin } = require('./middleware/admin');
@@ -206,6 +213,18 @@ app.get('/api/users/logout',auth,(req,res)=>{
         }
     )
 })
+
+app.post('/api/users/uploadimage',auth,admin,formidable(),(req,res)=>{
+    cloudinary.uploader.upload(req.files.file.path,(result) => {
+        res.status(200).send({
+            public_id : result.public_id,
+            url : result.url
+        })
+    },{
+        public_id :  `${Date.now()}`,
+        resource_type : 'auto'
+    })
+});
 
 app.listen(port, ()=>{
     console.log(`Server Running at port ${port}`);
