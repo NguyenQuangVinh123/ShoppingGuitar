@@ -256,8 +256,16 @@ const AddProduct = (props) => {
             setStateFormError()
         }
     }
-    const imagesHandler = () => {
-
+    const imagesHandler = (images) => {
+        const newFormData = {
+            ...form.formData
+        }
+        newFormData['images'].value = images;
+        newFormData['images'].valid = true;
+        setForm((preState) =>({
+            ...preState,
+            formData : newFormData
+        }))
     }
     return (
         <UserLayout>

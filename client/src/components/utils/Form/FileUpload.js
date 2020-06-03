@@ -56,32 +56,47 @@ const FileUpload = (props) => {
             }))
             let formData  = new FormData();
             const config = {
-                header : {'content-type' : 'nultipart/form-data'}
+                header : {'content-type' : 'multipart/form-data'}
             }
             formData.append("file",acceptedFiles[0]);
 
             axios.post('/api/users/uploadimage',formData,config)
                 .then(res => {
-                    console.log(res.data)
                     setUpload((preState) => ({
                         ...preState,
                         uploading : false,
                         uploadFiles : [...upload.uploadFiles,res.data]
-                    },()=>{
-                        props.imageHandler(upload.uploadFiles)
                     }))
                 })
         }
   },[acceptedFiles])
+//   useEffect(() => {
+//         props.imageHandler(upload.uploadFiles)
+//   }, [input])
   const onpointermove = (id) => {
-
+        axios.get(`/api/users/removeimage?public_id=${id}`)
+        .then(res =>{
+            let images = upload.uploadFiles.filter(item =>{
+                return item.public_id !== id;
+            });
+            setUpload((preState) => ({
+                ...preState,
+                uploadFiles: images
+            },()=>{
+                props.imageHandler(images)
+            }))
+        })
   }
+//   useEffect(() => {
+      
+     
+//   }, [upload])
   const showUploadImages = () => {
+      console.log(upload);
         upload.uploadFiles.map(item => (
             <div className='dropzone_box' key={item.public_id} onClick={() => onpointermove(item.public_id)}>
                     <div className="wrap">
                     <CircularProgress  style={{color:'#00bcd4'}} thickness={7} />
-
                     </div>
             </div>
         ))
