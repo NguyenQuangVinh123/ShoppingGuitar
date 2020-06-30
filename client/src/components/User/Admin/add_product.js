@@ -222,7 +222,6 @@ const AddProduct = (props) => {
     }
     const resetFiledHandler = () => {
         const newFormData = resetFields(form.formData,'products');
-        
         setForm((preState) => ({
             ...preState,
             formSuccess : true,
@@ -233,9 +232,7 @@ const AddProduct = (props) => {
                 ...preState,
                 formSuccess : false,
             }))
-           
-        },3000)
-   
+        },5000)
     }
     const submitForm = async (event) => {
         event.preventDefault();
@@ -245,7 +242,6 @@ const AddProduct = (props) => {
 
         if(formIsValid) {
           props.dispatch(addProduct(dataToSubmit)).then((res) =>{
-              console.log(props.products)
               if(res.payload.success){
                   resetFiledHandler();
               }else{

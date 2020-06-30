@@ -229,7 +229,7 @@ app.post('/api/users/uploadimage',auth,admin,formidable(),(req,res)=>{
 app.get('/api/users/removeimage',auth,admin,(req,res)=>{
     let image_id = req.query.public_id;
     cloudinary.uploader.destroy(image_id,(error,result)=>{
-        if(err) return res.json({success : false,error})
+        if(error) return res.json({success : false,error})
         res.status(200).send('OK')
     });
 });
