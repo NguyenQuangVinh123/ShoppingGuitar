@@ -182,7 +182,26 @@ const AddProduct = (props) => {
                 touched : false,
                 validationMessage : '',
                 showlabel : false
-            }
+            },
+            bestselling : {
+                element : 'select',
+                value : '',
+                config : {
+                    name : "bestselling_input",
+                    label : 'Bestselling',
+                    options : [
+                        {key : true,value : 'Show'},
+                        {key : false,value : 'Hidden'}
+                    ]
+                },
+                validation : {
+                    required : true,
+                },
+                valid : false,
+                touched : false,
+                validationMessage : '',
+                showlabel : true
+            },
         }
     })
     
@@ -232,7 +251,7 @@ const AddProduct = (props) => {
                 ...preState,
                 formSuccess : false,
             }))
-        },5000)
+        },3000)
     }
     const submitForm = async (event) => {
         event.preventDefault();
@@ -301,6 +320,10 @@ const AddProduct = (props) => {
                          <FormField id={'publish'} formData={form.formData.publish}
                             change = {(element) => updateForm(element)}
                         />
+                        <FormField id={'bestselling'} formData={form.formData.bestselling}
+                            change = {(element) => updateForm(element)}
+                        />
+                    
                         {
                             form.formSuccess ? 
                             <div className='form_success'>

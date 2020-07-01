@@ -51,7 +51,11 @@ const productSchema = mongoose.Schema({
     images : {
         type : Array,
         default : []
-    }
+    },
+    bestselling : {
+        required : true,
+        type : Boolean
+    },
 },{timestamps : true})
 
 const Product = mongoose.model('Product',productSchema);

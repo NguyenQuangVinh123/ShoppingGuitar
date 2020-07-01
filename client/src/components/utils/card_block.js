@@ -1,13 +1,22 @@
 import React from 'react';
 import Card from './card';
 const CardBlock = ({...props}) => {
+    let list = [];
+    if(props.list !== undefined){
+        if(props.type === 'bestselling'){
+            list = props.list.filter(card => card.bestselling == true);
+        }else{
+            list = props.list
+        }
+    }
+  
     const renderCards = () => (
-        props.list ?
-        props.list.map((card,index) => (
-            
+        list ?
+        list.map((card,index) => (
+                
                 <Card key={index} {...card} />
            
-         )) : null
+        )) : null
     )
     return (
         <div className='card_block'>

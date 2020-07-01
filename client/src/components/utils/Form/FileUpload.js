@@ -52,7 +52,6 @@ const FileUpload = (props) => {
     uploading: false,
     uploadFiles: [],
   });
-  const [reset,setReset] = useState(props.reset)
   useEffect(() => {
     if (acceptedFiles.length > 0) {
       setUpload((preState) => ({
@@ -78,23 +77,14 @@ const FileUpload = (props) => {
     props.imagesHandler(upload.uploadFiles);
     
  },[upload.uploadFiles])
-//  if(props.reset){
-//     resetTest()
-//  }
-//  const resetTest = async() =>{
-//       await setUpload((preState) => ({
-//           ...preState,
-//           uploadFiles: [],
-//       }));
-//  }
+
+
 useEffect(() => {
-  console.log(reset)
   setUpload((preState) => ({
               ...preState,
               uploadFiles: [],
            }));
-},[reset])
-console.log(upload)
+},[props.reset])
 
   const onpointermove = (id) => {
     axios.get(`/api/users/removeimage?public_id=${id}`).then((res) => {
@@ -110,7 +100,6 @@ console.log(upload)
   };
  
   const showUploadImages = () => {
-
     if(upload.uploadFiles !== undefined){
       return upload.uploadFiles.map((item) => (
         <div

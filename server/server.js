@@ -123,7 +123,7 @@ app.post('/api/product/shop',(req,res) =>{
 app.post('/api/product/wood',auth,admin,(req,res) => {
     const wood = new Wood(req.body);
     wood.save((err,doc)=>{
-        if(err) return err;
+        if(err) return res.json({success: false,err});
         res.status(200).json({
             success: true,
             wood : doc

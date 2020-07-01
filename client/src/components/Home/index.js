@@ -12,9 +12,9 @@ const Home = (props) => {
   },[])
   return <div>
     <HomeSlider />
-    <CardBlock list={props.products.bySell} title ="Best Selling guitars" />
+    <CardBlock list={props.products.bySell} type="bestselling" title ="Best Selling guitars" />
     <HomePromotion />
-    <CardBlock list={props.products.byArrival} title ="New Arrivals" />
+    <CardBlock list={props.products.byArrival}  title ="New Arrivals" />
 
   </div>;
 };
