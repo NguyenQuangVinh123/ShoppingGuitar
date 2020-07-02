@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-
 const ProductImage = (props) => {
     const[imageProduct,setimageProduct] = useState({
-        lightBox : false,
         imagePos : 0,
         lightboxImages : [],
     })
@@ -25,22 +23,17 @@ const ProductImage = (props) => {
             return `/images/image_not_availble.png`
         }
     }
-    const handelLightBox = () => {
-
-    }
     const showThumbs = () =>(
         imageProduct.lightboxImages.map((item,i) => (
             i > 0 ?
-            <div key={i} onClick={() =>handelLightBox(i) } className='thumb' style={{background:`url(${item}) no-repeat`}} >
-
+            <div key={i} className='thumb' style={{background:`url(${item}) no-repeat`}} >
             </div> : null
         ))
     )
     return (
         <div className="product_image_container">
             <div className='main_pic'>
-                <div onClick={() => handelLightBox(0)} style={{background:`url(${renderCardImage(props.detail.images)}) no-repeat`}}>
-
+                <div  style={{background:`url(${renderCardImage(props.detail.images)}) no-repeat`}}>
                 </div>
             </div>
             <div className='main_thumbs'>

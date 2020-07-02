@@ -12,7 +12,11 @@ const ProductPage = (props) => {
   useEffect(() => {
     const id = props.match.params.id;
     console.log(id);
-    props.dispatch(getProductDetail(id));
+    props.dispatch(getProductDetail(id)).then(res =>{
+        if(!props.products.productDetail){
+            props.history.push('/')
+        }
+    });
     return () => {
       props.dispatch(clearProductDetail());
     };

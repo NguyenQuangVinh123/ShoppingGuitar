@@ -1,5 +1,7 @@
 import React from "react";
 import MyButton from '../utils/button';
+import {connect} from 'react-redux';
+import { addToCart } from '../../actions/user_actions';
 const Card = ({ ...props }) => {
   const renderCardImage = (images) => {
     if (images.length > 0) {
@@ -39,7 +41,7 @@ const Card = ({ ...props }) => {
         <div className='button_wrap'>
           <MyButton type ="bag_link" 
           altClass = "bag_link" runAction={() =>{
-            console.log('aatestbag')
+              props.dispatch(addToCart(props._id))
           }} 
           />
         </div>
@@ -48,5 +50,9 @@ const Card = ({ ...props }) => {
     </div>
   );
 };
-
-export default Card;
+const mapStateToProps = (state) =>{
+  return {
+    user: state.user
+  }
+}
+export default connect(mapStateToProps)(Card);
