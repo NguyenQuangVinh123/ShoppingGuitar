@@ -168,14 +168,21 @@ app.get("/api/users/auth", auth, (req, res) => {
 });
 app.post("/api/users/register", (req, res) => {
   const user = new User(req.body);
+  User.findOne({ email: req.body.email})
+  .then(email => {
+    if(email){
+      res.status(400).json({success: false, message : "email duplicate"})
+    }else{
+      user.save((err, doc) => {
+        if (err) return res.json({ success: false, err });
+        res.status(200).json({
+          success: true,
+          userdata: doc,
+        });
+      });
+    }
+  })
 
-  user.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
-    res.status(200).json({
-      success: true,
-      userdata: doc,
-    });
-  });
 });
 
 app.post("/api/users/login", (req, res) => {
@@ -231,7 +238,16 @@ app.get("/api/users/removeimage", auth, admin, (req, res) => {
     res.status(200).send("OK");
   });
 });
-app.post("/api/users/addToCart",auth,(req,res) => {
+app.post("/api/users/addToCart",(req,res) => {
+  User.find({},(err,result)=>{
+      // var test = result.map(item => {return item.token})
+      // var testA = test.filter(item => {return !item });
+      // if(testA.length > 0){
+      //   console.log('aa')
+      // }else{
+      //   console.log('bbb')
+      // }
+  })
   var quantity = req.query.quantity;
   var castQuantity = parseInt(quantity);
   User.findOne({_id: req.user._id},(err,doc) =>{

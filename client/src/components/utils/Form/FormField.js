@@ -27,7 +27,7 @@ const FormField = ({id,formData,change}) => {
                             {...formData.config}
                             value = {formData.value}
                             onBlur = {(event) => change({event,id,blur:true}) }
-                            onChange = {(event) => change(event,id)}
+                            onChange = {(event) => change({event,id})}
                         />
                         {showError()}
                     </div>
