@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MyButton from '../utils/button';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
 import faTruck from '@fortawesome/fontawesome-free-solid/faTruck';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck'
 import faTimes from '@fortawesome/fontawesome-free-solid/faTimes'
+import FormField from '../utils/Form/FormField';
 
 const ProductInfo = (props) => {
+    const statequantity = {
+            element: "number",
+            value : 1,
+    }
+    
+    const [quantity,setQuantity] = useState(statequantity)
     const showProductTag = (detail) =>(
         <div className='product_tags'>
             { detail.shipping ? 
@@ -36,15 +43,34 @@ const ProductInfo = (props) => {
         </div>
     
     )
+ 
+    const updateForm = async (element) => {
+         const getValue = element.event.target.value;
+        // const newFormData = update(element, input.formData, "login");
+        // const newFormData_Input = {
+        //   formError: false,
+        //   formData: newFormData,
+        // };
+        await setQuantity((preState) => ({
+            ...preState,
+            value : getValue
+        }));
+      };
 
     const showProductAction = (detail) =>(
         <div className= 'product_actions'>
             <div className='price'>
                 {detail.price} $
             </div>
+            <FormField
+                id={"quantity"}
+                formData={quantity}
+                change={(element) => updateForm(element)}
+            />
+       
             <div className='cart'>
                 <MyButton type='add_to_cart_link' runAction = {() =>{
-                    console.log('addd to card')
+                    props.addToCart(detail._id,quantity.value)
                 }} />
             </div>
             
@@ -60,7 +86,6 @@ const ProductInfo = (props) => {
             {showProductTag(props.detail)}
             {showProductAction(props.detail)}
             
-            <MyButton /> 
         </div>
     );
 };

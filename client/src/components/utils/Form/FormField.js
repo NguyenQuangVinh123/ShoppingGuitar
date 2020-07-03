@@ -27,12 +27,24 @@ const FormField = ({id,formData,change}) => {
                             {...formData.config}
                             value = {formData.value}
                             onBlur = {(event) => change({event,id,blur:true}) }
-                            onChange = {(event) => change({event,id})}
+                            onChange = {(event) => change(event)}
                         />
                         {showError()}
                     </div>
                 )
                 break;
+                case ('number'):
+                    formTemplate = (
+                        <div className="formBlock">
+                            <input 
+                                value = {formData.value}
+                                onBlur = {(event) => change({event,id,blur:true}) }
+                                onChange = {(event) => change({event,id})}
+                            />
+                            {showError()}
+                        </div>
+                    )
+                    break;
             case ('textarea') :
                 formTemplate = (
                     <div className="formBlock">
@@ -49,7 +61,7 @@ const FormField = ({id,formData,change}) => {
                     </div>
                 )
                 break;
-                case ('select') :
+            case ('select') :
                 formTemplate = (
                     <div className="formBlock">
                         {formData.showlabel ? 
@@ -73,7 +85,6 @@ const FormField = ({id,formData,change}) => {
                     </div>
                 )
                 break;
-
             default:
                 formTemplate = null
                 break;

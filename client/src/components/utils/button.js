@@ -22,7 +22,7 @@ const MyButton = (props) => {
                         template = <div className="add_to_cart_link" onClick={() => {props.runAction()}} >
                              <FontAwesomeIcon icon={faShoppingBag} />Add To Cart
                         </div>
-        
+                    break;
             default:
                 template ='';
                 break;

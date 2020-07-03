@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import MyButton from '../utils/button';
 import {connect} from 'react-redux';
 import { addToCart } from '../../actions/user_actions';
 const Card = ({ ...props }) => {
+  const [quantity,setquantity] = useState(1);
   const renderCardImage = (images) => {
     if (images.length > 0) {
       return images[0].url;
@@ -41,7 +42,7 @@ const Card = ({ ...props }) => {
         <div className='button_wrap'>
           <MyButton type ="bag_link" 
           altClass = "bag_link" runAction={() =>{
-              props.dispatch(addToCart(props._id))
+              props.dispatch(addToCart(props._id,quantity))
           }} 
           />
         </div>

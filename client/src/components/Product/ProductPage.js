@@ -7,31 +7,35 @@ import {
 } from "../../actions/products_actions";
 import ProductInfo from "./ProductInfo";
 import ProductImage from "./ProductImage";
-
+import {addToCart } from "../../actions/user_actions"
 const ProductPage = (props) => {
   useEffect(() => {
     const id = props.match.params.id;
-    console.log(id);
     props.dispatch(getProductDetail(id)).then(res =>{
-        if(!props.products.productDetail){
+        if(res.payload === undefined){
             props.history.push('/')
         }
-    });
+    })
     return () => {
       props.dispatch(clearProductDetail());
     };
-  }, []);
-  const addToCart = () => {};
+  },[]);
+ 
+  const addToCartHandler = (id,quantity=1) => {
+    const castQuanTity = parseInt(quantity);
+    props.dispatch(addToCart(id,castQuanTity))
+  };
   return (
     <div>
       <PageTop title="Product Detail" />
       <div className="container">
-        {props.products.productDetail ? (
+        {
+            props.products.productDetail ? (
           <div className="product_detail_wrapper">
             <div className="left" style={{width:'500px'}}><ProductImage detail={props.products.productDetail} /></div>
             <div className="right">
               <ProductInfo
-                addToCart={(id) => addToCart(id)}
+                addToCart={(id,quantity) => addToCartHandler(id,quantity)}
                 detail={props.products.productDetail}
               />
             </div>
