@@ -9,7 +9,7 @@ function App() {
   return (
     <div>
       <Switch>
-          <Route  path= "/webadmin"  component={AdminPage}></Route>
+          <Route  path= "/webadmin"  ><AdminPage /></Route>
          <Routes />      
 
       </Switch>
