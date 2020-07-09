@@ -22,6 +22,11 @@ const productSchema = mongoose.Schema({
         ref : 'Brand',
         required : true
     },
+    discount :{
+        type : Number,
+        maxlength : 255,
+        default : 0,
+    },
     shipping: {
         required : true,
         type : Boolean

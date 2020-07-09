@@ -1,5 +1,5 @@
 import axios from "axios";
-import { PRODUCT_SERVER } from "../components/utils/misc";
+import { PRODUCT_SERVER } from "../utils/misc";
 import {
   GET_PRODUCT_BY_ARRIVAL,
   GET_PRODUCT_TO_SHOP,

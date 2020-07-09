@@ -1,5 +1,5 @@
 import axios from "axios";
-import { USER_SERVER } from "../components/utils/misc";
+import { USER_SERVER } from "../utils/misc";
 import { LOGIN_USER, REGISTER_USER, AUTH_USER, LOGOUT_USER,ADD_TO_CART_USER } from "./types";
 export function registerUser(dataToSubmit) {
   const request = axios
